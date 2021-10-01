@@ -23,15 +23,18 @@ namespace app.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet("/Test")]
+        public IActionResult Test()
         {
-            return View();
+            var db = new DBManagerClass("http://127.0.0.1:5984", "admin", "admin");
+
+
+            //this.TestAddTable(db);
+
+            var ans = db.GetTables();
+            return Json(ans);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
     }
 }

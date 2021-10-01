@@ -1,0 +1,76 @@
+﻿@model app.Controllers.TableViewModel
+@{
+    ViewData["Title"] = "Table view";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Table View/Edit</h1>
+</div>
+
+@Model.tableCode
+
+<div ng-app="tableEditor">
+    <div ng-controller="dml as dml" ng-init="dml.InitTableCode('@Model.tableCode')">
+        <table>
+            <tr>
+                <td>
+                    <ul>
+                        @foreach (var fld in Model.table.fields)
+                        {
+                            <li>
+                                <input type="checkbox" ng-model="dml.show['@fld.name']" ng-change="dml.LoadRows()"> @fld.name
+                            </li>
+                        }
+
+                </ul>
+                </td>
+                <td>
+
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                @foreach (var fld in Model.table.fields)
+                                {
+                                    <th ng-if="dml.show['@fld.name']">@fld.name</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button ng-click="dml.AddRow()">Add row</button>
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="row in dml.rowsList" ng-click="dml.SelectRow(row)">
+                                <td>
+                                    <button ng-click="dml.SaveRow(row)" ng-show="row.dirty||row.IsNew">Save</button>
+                                </td>
+                                @foreach (var fld in Model.table.fields)
+                                {
+                                    <td ng-if="dml.show['@fld.name']">
+                                        <input type=" text" ng-model="row.data.@fld.name" ng-change="row.dirty=true">
+                                        <!-- <span ng-if="false">{{row.data.@fld.name}}</span> -->
+                                </td>
+                                }
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+
+@section Scripts
+{
+<script src="@Url.Content("~/js/main.js")"></script>
+<script src="@Url.Content("~/js/ctrlTableView.js")"></script>
+}

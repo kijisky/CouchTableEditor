@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">DDL Editor</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<div ng-app="tableEditor">
+    <div ng-controller="ddl as ddl">
+
+        <table width="100%" border="1">
+            <tr>
+                <td width="30%">
+                    <h1>Tables</h1>
+                </td>
+                <td width="70%">
+                    <h1>Fields</h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                    <table border="1">
+                        <tr ng-repeat="tbl in ddl.tablesList" ng-click="ddl.LoadTable(tbl)">
+                            <td>
+                                {{tbl.name}}
+                            </td>
+                            <td>
+                                {{tbl.code}}
+                            </td>
+                            <td>
+                                <a href="/Table/{{tbl.id}}"> &gt&gt</a>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+                <td>
+                    <div ng-show="ddl.selectedTable != null">
+                        Таблица: {{ddl.selectedTable.name}}
+
+                        <table border="1">
+                            <tr>
+                                <td>Name</td>
+                                <td>Code</td>
+                                <td>Descr</td>
+                            </tr>
+                            <tr ng-repeat="fld in ddl.selectedTable.fields">
+                                <td>
+                                    <input name="fldName" ng-if="fld.IsNew" type="text" ng-model="fld.name">
+                                    <span ng-if="!fld.IsNew"> {{fld.name}}</span>
+                                </td>
+                                <td>
+                                    <input name="fldCode" type="text" ng-model="fld.code" ng-change="fld.dirty=true">
+                                </td>
+                                <td>
+                                    <input name="fldDescription" type="text" ng-model="fld.descr"
+                                        ng-change="fld.dirty=true">
+                                </td>
+                                <td>
+                                    <button ng-click="ddl.SaveField(fld)" ng-if="fld.dirty||fld.IsNew">Save</button>
+                                    <button ng-click="ddl.DeleteField(fld)">Del</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button ng-click="ddl.addField()">add field</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+
+
+        <button ng-click="ddl.click('h')">ADD Table</button>
+    </div>
+</div>
+
+
+@section Scripts
+{
+<script src="@Url.Content("~/js/main.js")"></script>
+<script src="@Url.Content("~/js/ctrlDdlTables.js")"></script>
+}
