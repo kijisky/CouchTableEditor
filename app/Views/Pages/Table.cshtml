@@ -2,33 +2,6 @@
 @{
     ViewData["Title"] = "Table view";
 }
-<style>
-    td {
-        vertical-align: top;
-    }
-
-    tr.selected {
-        background-color: yellow;
-    }
-
-    div.popupWin {
-        background: white;
-        border: solid 5px;
-        overflow-y: scroll;
-
-
-        position: absolute;
-        top: 20%;
-        left: 20%;
-        right: 10%;
-        bottom: 10%;
-    }
-
-    .rightAlign {
-        float: right;
-    }
-</style>
-
 
 <div class="text-center">
     <h1 class="display-4">Table View/Edit</h1>
@@ -42,7 +15,7 @@
 
         <table>
             <tr>
-                <td style="vertical-align: top">
+                <td class="mainTbl">
                     <ul>
                         <li>
                             <input type="checkbox" ng-model="dml.show['_id']">ID
@@ -59,7 +32,7 @@
                     </ul>
 
                 </td>
-                <td>
+                <td class="mainTbl">
                     Search: <input name="tableSearch" type="text" ng-model="dml.searchString"
                         ng-model-options='{ debounce: 1000 }'>
                     <partial name="Table/dataTable.cshtml" />
