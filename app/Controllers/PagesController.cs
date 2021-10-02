@@ -36,5 +36,14 @@ namespace app.Controllers
             return View("Table", model);
         }
 
+        [HttpGet("/Table/")]
+        public IActionResult ShowTablesList()
+        {
+            var model = new TableViewModel();
+            model.tables = this.db.GetTables();
+
+            return View("TablesList", model);
+        }
+
     }
 }

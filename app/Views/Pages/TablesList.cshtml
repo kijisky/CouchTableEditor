@@ -1,0 +1,25 @@
+﻿@model app.Controllers.TableViewModel
+@{
+    ViewData["Title"] = "Table view";
+}
+<style>
+    td {
+        vertical-align: top;
+    }
+</style>
+
+
+<div class="text-center">
+    <h1 class="display-4">Tables list</h1>
+</div>
+
+
+<ul>
+    @foreach (var tbl in Model.tables)
+    {
+        <li>
+            <a asp-action="ShowTable" asp-route-tableCode="@tbl.id"> @tbl.name </a>
+        </li>
+    }
+
+</ul>
