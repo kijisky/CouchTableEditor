@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using app.Models;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace app.Controllers
 {
@@ -16,10 +18,13 @@ namespace app.Controllers
         private readonly ILogger<ApiDataController> _logger;
         private readonly DBManagerClass db;
 
-        public ApiDataController(ILogger<ApiDataController> logger)
+        public ApiDataController(IConfiguration config, ILogger<ApiDataController> logger)
         {
+            var host = config.GetValue<string>("Couchdb:host");
+            var user = config.GetValue<string>("Couchdb:user");
+            var pass = config.GetValue<string>("Couchdb:password");
+            this.db = new DBManagerClass(host, user, pass);
             _logger = logger;
-            this.db = new DBManagerClass("http://127.0.0.1:5984", "admin", "admin");
         }
 
         [HttpGet("/api/table/{tableCode}/rows")]

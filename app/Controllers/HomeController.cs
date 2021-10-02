@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using app.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace app.Controllers
 {
     public class HomeController : Controller
     {
         private static Random random = new Random();
+        private DBManagerClass db;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IConfiguration config, ILogger<HomeController> logger)
         {
             _logger = logger;
+            var host = config.GetValue<string>("Couchdb:host");
+            var user = config.GetValue<string>("Couchdb:user");
+            var pass = config.GetValue<string>("Couchdb:password");
+            this.db = new DBManagerClass(host, user, pass);
         }
 
         public IActionResult Index()
@@ -27,8 +33,8 @@ namespace app.Controllers
         [HttpGet("/Test/filldata/{tableCode}")]
         public IActionResult TestFillData(string tableCode, int rows = 100)
         {
-            var db = new DBManagerClass("http://127.0.0.1:5984", "admin", "admin");
-            var tblMetadata = db.GetTable(tableCode);
+            
+            var tblMetadata = this.db.GetTable(tableCode);
 
 
 

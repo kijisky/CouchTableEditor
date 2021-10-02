@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using app.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace app.Controllers
 {
@@ -14,10 +15,14 @@ namespace app.Controllers
         private readonly ILogger<ApiVocController> _logger;
         private readonly DBManagerClass db;
 
-        public ApiVocController(ILogger<ApiVocController> logger)
+        public ApiVocController(IConfiguration config, ILogger<ApiVocController> logger)
         {
             _logger = logger;
-            this.db = new DBManagerClass("http://127.0.0.1:5984", "admin", "admin");
+
+            var host = config.GetValue<string>("Couchdb:host");
+            var user = config.GetValue<string>("Couchdb:user");
+            var pass = config.GetValue<string>("Couchdb:password");
+            this.db = new DBManagerClass(host, user, pass);
         }
 
         [HttpGet("/api/vocabulary")]

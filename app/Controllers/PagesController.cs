@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using app.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace app.Controllers
 {
@@ -14,10 +15,13 @@ namespace app.Controllers
         private readonly ILogger<PagesController> _logger;
         private readonly DBManagerClass db;
 
-        public PagesController(ILogger<PagesController> logger)
+        public PagesController(IConfiguration config, ILogger<PagesController> logger)
         {
             _logger = logger;
-            this.db = new DBManagerClass("http://127.0.0.1:5984", "admin", "admin");
+            var host = config.GetValue<string>("Couchdb:host");
+            var user = config.GetValue<string>("Couchdb:user");
+            var pass = config.GetValue<string>("Couchdb:password");
+            this.db = new DBManagerClass(host, user, pass);
         }
 
         [HttpGet("/DDL/")]
@@ -27,7 +31,7 @@ namespace app.Controllers
         }
 
 
-         [HttpGet("/vocabulary/")]
+        [HttpGet("/vocabulary/")]
         public IActionResult VocabularyEditor()
         {
             return View("Vocabulary");
