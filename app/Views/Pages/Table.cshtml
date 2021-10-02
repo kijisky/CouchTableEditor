@@ -41,7 +41,7 @@
                 <td>
                     Search: <input name="tableSearch" type="text" ng-model="dml.searchString"
                         ng-model-options='{ debounce: 1000 }'>
-                     <div ng-include="'/tmplt/dataTable.html'"></div>
+                        <partial name="Table/dataTable.cshtml" />
                 </td>
             </tr>
         </table>
