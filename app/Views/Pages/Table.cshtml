@@ -31,7 +31,7 @@
                         {
                             <li>
                                 <input type="checkbox" ng-model="dml.show['@fld.name']" ng-change="dml.LoadRows()">
-                                @fld.name
+                                @(fld.alias ?? fld.name)
                             </li>
                         }
 

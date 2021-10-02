@@ -5,7 +5,7 @@
             <td ng-if="dml.show['_id']">ID</td>
             @foreach (var fld in Model.table.fields)
             {
-                <th ng-if="dml.show['@fld.name']">@fld.name</th>
+                <th ng-if="dml.show['@fld.name']">@(fld.alias ?? fld.name)</th>
             }
         </tr>
     </thead>
