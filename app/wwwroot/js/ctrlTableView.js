@@ -1,5 +1,5 @@
 tableEditor
-    .controller('dml', function (logger, svcDML, $scope) {
+    .controller('dml', function (logger, svcDML, svcVoc, $scope) {
         dml = this;
         dml.rowsList = [];
         dml.tableCode = null;
@@ -13,6 +13,7 @@ tableEditor
         dml.InitTableCode = function (tableCode) {
             dml.tableCode = tableCode;
             dml.LoadRows();
+            dml.LoadVocabularies();
         }
 
         dml.GetVisibleFields = function () {
@@ -23,6 +24,18 @@ tableEditor
                 }
             }
             return ans;
+        }
+
+        dml.LoadVocabularies = function(){
+            svcVoc.GetVocList().then(function (ajaxData) {
+                dml.vocList = {}
+                for(var vodIndex in ajaxData){
+                    var vocId = ajaxData[vodIndex].id;
+                    var vocTerms = ajaxData[vodIndex].termsList;
+                    dml.vocList[vocId] = vocTerms;
+                }
+                $scope.$apply();
+            });
         }
 
         dml.LoadRows = function () {

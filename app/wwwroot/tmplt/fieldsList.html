@@ -9,7 +9,7 @@
     <tr ng-repeat="fld in ddl.selectedTable.fields" ng-click="ddl.SelectField(fld)"
         ng-class="{'selected' : fld==ddl.selectedField }">
         <td>
-            <button ng-click="ddl.SaveField(fld)" ng-if="fld.dirty||fld.IsNew">Save</button>
+            <button ng-click="ddl.SaveField(fld)" ng-if="fld.IsDirty||fld.IsNew">Save</button>
             <button ng-click="ddl.DeleteField(fld)">Del</button>
         </td>
         <td>
@@ -17,7 +17,7 @@
             <span ng-if="!fld.IsNew"> {{fld.name}}</span>
         </td>
         <td>
-            <select name="fldType" ng-model="fld.type" ng-change="fld.dirty=true">
+            <select name="fldType" ng-model="fld.type" ng-change="ddl.OnEditField()">
                 <option value="number">Число</option>
                 <option value="text">Текст</option>
                 <option value="dict">Словарь</option>

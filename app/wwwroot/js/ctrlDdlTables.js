@@ -1,7 +1,8 @@
 tableEditor
-    .controller('ddl', function (logger, svcDDL, $scope) {
+    .controller('ddl', function (logger, svcDDL, svcVoc, $scope) {
         ddl = this;
         ddl.tablesList = [];
+        ddl.vocList = [];
         ddl.selectedTable = null;
         ddl.selectedField = null;
 
@@ -21,6 +22,13 @@ tableEditor
 
         ddl.SelectField = function (fld) {
             ddl.selectedField = fld;
+        }
+
+        ddl.LoadVocList = function () {
+            svcVoc.GetVocList().then(function (ajaxData) {
+                ddl.vocList = ajaxData;
+                $scope.$apply();
+            });
         }
 
         ddl.LoadTable = function (pTable) {
@@ -61,4 +69,5 @@ tableEditor
         }
 
         ddl.LoadTablesList();
+        ddl.LoadVocList();
     })

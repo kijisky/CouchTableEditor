@@ -9,16 +9,20 @@ namespace app.Controllers
         public string type { get; set; }
         public string code { get; set; }
         public string descr { get; set; }
-        public string dictName { get; set; }
+        public string dictId { get; set; }
+        // public string dictMultiSelect { get; set; }
 
         internal void SetFrom(mdField field)
         {
             //this.name = field.name;
             this.alias = field.alias;
-            this.dictName = field.dictName;
             this.type = field.type;
             this.descr = field.descr;
             this.code = field.code;
+
+            this.dictId = field.dictId;
+            // this.dictMultiSelect = field.dictMultiSelect;
+
         }
 
         internal void SetValue(TableRow newRow, string val)
