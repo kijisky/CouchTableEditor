@@ -1,0 +1,40 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th></th>
+            <td ng-if="dml.show['_id']">ID</td>
+            @foreach (var fld in Model.table.fields)
+            {
+            <th ng-if="dml.show['@fld.name']">@fld.name</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <button ng-click="dml.AddRow()">Add row</button>
+            </td>
+        </tr>
+
+        <tr ng-repeat="row in dml.rowsList | filter:dml.searchString" ng-click="dml.SelectRow(row)">
+            <td>
+                <button ng-click="dml.SaveRow(row)" ng-show="row.dirty||row.IsNew">Save</button>
+                <button ng-click="dml.OpenCard(row)">Open</button>
+            </td>
+            <td ng-if="dml.show['_id']">
+                {{row._id}}
+            </td>
+            @foreach (var fld in Model.table.fields)
+            {
+            <td ng-if="dml.show['@fld.name']">
+                <input type=" text" ng-model="row.data.@fld.name" ng-change="row.dirty=true">
+                <!-- <span ng-if="false">{{row.data.@fld.name}}</span> -->
+            </td>
+            }
+
+        </tr>
+
+
+    </tbody>
+
+</table>
