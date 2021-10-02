@@ -43,13 +43,13 @@ tableEditor
         }
 
         ddl.addField = function () {
-            if (!this.selectedTable) return;
-            this.selectedTable.fields.push({ IsNew: true });
+            if (!ddl.selectedTable) return;
+            ddl.selectedTable.fields.push({ IsNew: true });
         }
 
         ddl.SaveField = function (fld) {
-            if (!this.selectedTable) return;
-            svcDDL.SaveField(this.selectedTable.id, fld).then(function () {
+            if (!ddl.selectedTable) return;
+            svcDDL.SaveField(ddl.selectedTable.id, fld).then(function () {
                 fld.IsNew = false;
                 fld.IsDirty = false;
                 logger.log("field saved");
@@ -58,12 +58,16 @@ tableEditor
         }
 
         ddl.DeleteField = function (fld) {
-            if (!this.selectedTable) return;
+            if (!ddl.selectedTable) return;
+            var AreYouSure = confirm('Удалить поле?' + fld.name);
+            if (!AreYouSure){
+                return;
+            }
 
-            svcDDL.DeleteField(this.selectedTable.id, fld).then(function () {
+            svcDDL.DeleteField(ddl.selectedTable.id, fld).then(function () {
                 logger.log("field deleted");
-                var indx = this.selectedTable.fields.indexOf(fld);
-                this.selectedTable.fields.splice(indx, 1);
+                var indx = ddl.selectedTable.fields.indexOf(fld);
+                ddl.selectedTable.fields.splice(indx, 1);
                 $scope.$apply();
             });
         }
