@@ -2,7 +2,7 @@
 
 <table border="1">
     <tr ng-repeat="tbl in ddl.tablesList" ng-click="ddl.LoadTable(tbl)"
-        ng-class="{'selected' : tbl.id==ddl.selectedTable.id }">
+        ng-class="{'selected' : tbl.id==ddl.selectedTerm.id }">
         <td>
             {{tbl.name}}
         </td>

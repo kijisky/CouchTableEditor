@@ -1,57 +1,72 @@
 Поле: {{ddl.selectedTable.name}}.{{ddl.selectedField.name}}
 <table border="1">
-    <tr>
-        <td>Название</td>
-        <td>
-            <input name="fldName" ng-if="ddl.selectedField.IsNew" type="text" ng-model="ddl.selectedField.name">
-            <span ng-if="!ddl.selectedField.IsNew"> {{ddl.selectedField.name}}</span>
-        </td>
-    </tr>
+    <tbody>
+        <tr>
+            <td>Название</td>
+            <td>
+                <input name="fldName" ng-if="ddl.selectedField.IsNew" type="text" ng-model="ddl.OnEditField()">
+                <span ng-if="!ddl.selectedField.IsNew"> {{ddl.selectedField.name}}</span>
+            </td>
+        </tr>
 
-    <tr>
-        <td>Type</td>
-        <td>
-            <select name="fldType" ng-model="ddl.selectedField.code" ng-change="ddl.selectedField.dirty=true">
-                <option value="number">Число</option>
-                <option value="text">Текст</option>
-                <option value="dict">Словарь</option>
-                <option value="subclass">Подкласс</option>
-                <option value="array">Массов</option>
-            </select>
-        </td>
-    </tr>
+        <tr>
+            <td>Type</td>
+            <td>
+                <select name="fldType" ng-model="ddl.selectedField.type" ng-change="ddl.OnEditField()">
+                    <option value="number">Число</option>
+                    <option value="text">Текст</option>
+                    <option value="dict">Словарь</option>
+                    <option value="subclass">Подкласс</option>
+                    <option value="array">Массов</option>
+                </select>
+            </td>
+        </tr>
 
-    <tr>
-        <td>Код</td>
-        <td>
-            <input name="fldCode" type="text" ng-model="ddl.selectedField.code"
-                ng-change="ddl.selectedField.dirty=true">
-        </td>
-    </tr>
-
-    <tr>
-        <td>Синоним</td>
-        <td>
-            <input type="text" ng-model="ddl.selectedField.alias" ng-change="fld.dirty=true">
-        </td>
-    </tr>
-
-    <tr>
-        <td>Описание</td>
-        <td>
-            <input type="text" ng-model="ddl.selectedField.descr" ng-change="fld.dirty=true">
-        </td>
-    </tr>
+        <tr>
+            <td>Код</td>
+            <td>
+                <input name="fldCode" type="text" ng-model="ddl.selectedField.code"
+                    ng-change="ddl.selectedField.dirty=true">
+            </td>
+        </tr>
 
 
+    </tbody>
+
+    <tbody>
+        <tr>
+            <td>Синоним</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.alias" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Описание</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.descr" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+    </tbody>
+
+    <tbody ng-show="ddl.selectedField.type=='dict'">
+        <tr>
+            <td>Название словаря</td>
+            <td>
+                <select type="text" ng-model="ddl.selectedField.dictId" ng-change="ddl.OnEditField()"
+                    ng-options="voc.id as voc.name for voc in ddl.vocList track by voc.id">
+            </td>
+        </tr>
+
+        <!-- <tr>
+            <td>Мультивыбор</td>
+            <td>
+                <input type="checkbox" ng-model="ddl.selectedField.dictMultiSelect" ng-change="ddl.OnEditField()">
+            </td>
+        </tr> -->
+    </tbody>
 
 
-    <tr>
-        <td>Описание</td>
-        <td>
-            <input name="fldDescription" type="text" ng-model="fld.descr" ng-change="fld.dirty=true">
-        </td>
-    </tr>
 
 
 

@@ -51,7 +51,7 @@ tableEditor
             if (!this.selectedTable) return;
             svcDDL.SaveField(this.selectedTable.id, fld).then(function () {
                 fld.IsNew = false;
-                fld.dirty = false;
+                fld.IsDirty = false;
                 logger.log("field saved");
                 $scope.$apply();
             });
@@ -66,6 +66,12 @@ tableEditor
                 this.selectedTable.fields.splice(indx, 1);
                 $scope.$apply();
             });
+        }
+
+        ddl.OnEditField = function () {
+            if (ddl.selectedField != null) {
+                ddl.selectedField.IsDirty = true;
+            }
         }
 
         ddl.LoadTablesList();
