@@ -1,0 +1,12 @@
+﻿<span ng-if="!row.IsEditing['@Model.name']">
+    <button ng-click="row.IsEditing['@Model.name']=true">E</button>
+    <span>{{ row.data['@Model.name'].name }}</span>
+</span>
+
+
+<span ng-if="row.IsEditing['@Model.name']">
+    <button ng-click="row.IsEditing['@Model.name']=false">V</button>
+    <select ng-model="row.data.@Model.name" ng-change="row.dirty=true"
+        ng-options="term as term.name for term in dml.vocList['@Model.dictId'] track by term.name">
+    </select>
+</span>

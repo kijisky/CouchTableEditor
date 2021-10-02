@@ -28,38 +28,17 @@
             @foreach (var fld in Model.table.fields)
             {
                 <td ng-if="dml.show['@fld.name']">
-                    <span ng-if="!row.IsEditing['@fld.name']">
-                        <button ng-click="row.IsEditing['@fld.name']=true">E</button>
-                        @if (fld.type == "dict")
-                        {
-                            <span>{{ row.data['@fld.name'].name }}</span>
-                        }
-                        else
-                        {
-                            <span>{{ row.data['@fld.name'] }}</span>
-                        }
-                    </span>
+                    @if (fld.type == "dict")
+                    {
+                        <partial name="fieldDict.cshtml" model="fld" />
+                    }
+                    else
+                    {
+                        <partial name="fieldText.cshtml" model="fld" />
+                    }
 
 
-                    <span ng-if="row.IsEditing['@fld.name']">
-                        <button ng-click="row.IsEditing['@fld.name']=false">V</button>
-                        @if (fld.type == "dict")
-                        {
-                            <select ng-model="row.data.@fld.name" ng-change="row.dirty=true"
-                        ng-options="term as term.name for term in dml.vocList['@fld.dictId'] track by term.name">
-                            </select>
-                        }
-                        else
-                        {
-                            <input type=" text" ng-model="row.data.@fld.name" ng-change="row.dirty=true">
-                        }
-                    </span>
-
-                    @* {
-
-                        } *@
-                    <!-- <span ng-if="false">{{row.data.@fld.name}}</span> -->
-            </td>
+                </td>
             }
 
         </tr>
