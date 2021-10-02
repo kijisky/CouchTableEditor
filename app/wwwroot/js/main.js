@@ -106,3 +106,85 @@ tableEditor.factory('svcDML', function (config) {
         }
     };
 })
+
+
+
+
+
+
+tableEditor.factory('svcVoc', function (config) {
+    return {
+        GetVocList: function () {
+            var t = fetch(config.baseUrl + "vocabulary/");
+            t = t.then(function (resp) {
+                return resp.json();
+            })
+            return t;
+        },
+        GetVoc: function (vocId) {
+            var urlGetRows = config.baseUrl + "vocabulary/" + vocId;
+
+            var t = fetch(urlGetRows);
+            t = t.then(function (resp) {
+                return resp.json();
+            })
+            return t;
+        },
+
+        SaveVoc: function (vocId, vocData) {
+            var url = config.baseUrl + "vocabulary/" + vocId;
+            var t = fetch(url, {
+                method: "PUT",
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
+                },
+                body: JSON.stringify(vocData)
+            });
+            return t;
+        },     
+        
+        DeleteVoc: function (vocId, vocData) {
+            var url = config.baseUrl + "vocabulary/" + vocId;
+            var t = fetch(url, {
+                method: "DELETE"
+            });
+            return t;
+        },              
+
+        GetVocTerms: function (vocId) {
+            var urlGetRows = config.baseUrl + "vocabulary/" + vocId + "/terms/";
+
+            var t = fetch(urlGetRows);
+            t = t.then(function (resp) {
+                return resp.json();
+            })
+            return t;
+        },
+
+        SaveTerm: function (vocId, termId,  termData) {
+            var url = config.baseUrl + "vocabulary/" + vocId + "/term/" + termId;
+            var t = fetch(url, {
+                method: "PUT",
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
+                },
+                body: JSON.stringify(termData)
+            });
+            return t;
+        },
+
+        DeleteTerm: function (vocId, termId) {
+            var url = config.baseUrl + "vocabulary/" + vocId + "/term/" + termId;
+            var t = fetch(url, {
+                method: "DELETE"
+
+            });
+            return t;
+        },        
+        
+        log: function (x) {
+            console.log("message: " + x);
+            console.log(config.baseUrl);
+        }
+    };
+})

@@ -1,0 +1,60 @@
+﻿@model app.Controllers.TableViewModel
+@{
+    ViewData["Title"] = "Vocabulary editor";
+}
+<style>
+    tr.selected {
+        background-color: yellow;
+    }
+
+    td.mainTbl {
+        vertical-align: top;
+    }
+</style>
+
+
+<div class="text-center">
+    <h1 class="display-4">Vocabulary</h1>
+</div>
+
+
+<div ng-app="tableEditor">
+    <div ng-controller="ctrlVoc as ctrlVoc">
+        <table border="1" width="100%" class="mainTbl">
+            <tr>
+                <td>
+                    VocList
+                </td>
+                <td>
+                    Terms Tree
+                </td>
+                <td>
+                    TermInfo
+                </td>
+            </tr>
+            <tr>
+                <td class="mainTbl">
+                    <div ng-include="'/tmplt/vocabularyList.html'"></div>
+                </td>
+                <td class="mainTbl">
+                    <div ng-show="ctrlVoc.selectedVocabulary" ng-include="'/tmplt/termsList.html'"></div>
+                </td>
+                <td class="mainTbl">
+                    <div ng-show="ctrlVoc.selectedTerm" ng-include="'/tmplt/vocabularyTerm.html'"></div>
+                </td>
+            </tr>
+        </table>
+
+
+
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+<script src="@Url.Content("~/js/main.js")"></script>
+<script src="@Url.Content("~/js/ctrlVocabulary.js")"></script>
+
+}

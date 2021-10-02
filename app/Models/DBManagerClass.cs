@@ -30,9 +30,10 @@ namespace app.Controllers
             this.mdVocabulary = await this.client.GetOrCreateDatabaseAsync<Vocabulary>();
         }
 
-        internal Vocabulary GetVocabulry(string pCode)
+        internal Vocabulary GetVocabulry(string pId)
         {
-            var ans = this.mdVocabulary.FirstOrDefault(v => v.code == pCode);
+            /// ошибки драйвер: один только FirstOrDewfault - не работает фильтр, ToArray нужен, без него падает
+            var ans = this.mdVocabulary.Where(v => v.Id == pId).ToArray().FirstOrDefault();
             return ans;
         }
 
@@ -45,6 +46,23 @@ namespace app.Controllers
         {
             var ans = Table.GetAll(this.client);
             return ans.ToArray();
+        }
+
+        internal void AddVocabulary(Vocabulary newVoc)
+        {
+            newVoc.Id = null;
+            this.mdVocabulary.AddAsync(newVoc).Wait();
+        }
+
+        internal void UpdateVocabulary(string codeVoc, Vocabulary updatedVoc)
+        {
+            var voc = this.GetVocabulry(codeVoc);
+            if (voc == null)
+            {
+                throw new Exception("voc Not found");
+            }
+            voc.UpdateFrom(updatedVoc);
+            this.mdVocabulary.AddOrUpdateAsync(voc).Wait();
         }
 
         internal void AddTable(mdTable newTbl)

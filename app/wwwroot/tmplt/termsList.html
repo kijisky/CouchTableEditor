@@ -1,0 +1,27 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="term in ctrlVoc.termsList track by $index" ng-click="ctrlVoc.SelectTerm(term)"
+            ng-class="{'selected' : term==ctrlVoc.selectedTerm }">
+            <td>
+                <button ng-click="ctrlVoc.RemoveTerm(term)">X</button>
+            </td>
+            <td>
+                <input ng-model="term.name">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <button ng-click="ctrlVoc.AddTerm()">Add</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>

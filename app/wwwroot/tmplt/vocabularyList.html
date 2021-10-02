@@ -1,0 +1,33 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Code</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="voc in ctrlVoc.vocList track by $index" ng-click="ctrlVoc.SelectVocabulary(voc)"
+            ng-class="{'selected' : voc==ctrlVoc.selectedVocabulary }">
+            <td>
+                <button ng-show="voc.IsNew || voc.IsDirty" ng-click="ctrlVoc.SaveVocabulary(voc)">Save</button>
+            </td>
+            <td>
+                <span ng-show="!voc.IsEditing" ng-dblclick="voc.IsEditing=true;">{{voc.code}}</span>
+                <input ng-show="voc.IsEditing" ng-model="voc.code" ng-change="voc.IsDirty=true">
+            </td>
+            <td>
+                <span ng-show="!voc.IsEditing" ng-dblclick="voc.IsEditing=true;">{{voc.name}}</span>
+                <input ng-show="voc.IsEditing" ng-model="voc.name" ng-change="voc.IsDirty=true">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <button ng-click="ctrlVoc.AddVocabulary()">Add</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>

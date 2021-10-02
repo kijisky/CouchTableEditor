@@ -26,6 +26,13 @@ namespace app.Controllers
             return View("DDL");
         }
 
+
+         [HttpGet("/vocabulary/")]
+        public IActionResult VocabularyEditor()
+        {
+            return View("Vocabulary");
+        }
+
         [HttpGet("/Table/{tableCode}")]
         public IActionResult ShowTable(string tableCode)
         {
