@@ -8,5 +8,7 @@ namespace app.Controllers
         public TableViewModel()
         {
         }
+
+        public Table[] tables { get; internal set; }
     }
 }
