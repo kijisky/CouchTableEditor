@@ -66,7 +66,33 @@
         </tr> -->
     </tbody>
 
+    <tr>
+        <td>Показывать как URL</td>
+        <td>
+            <input type="checkbox" ng-model="ddl.selectedField.showUrl" ng-change="ddl.OnEditField()">
+        </td>
+    </tr>
 
+    <tbody ng-show="ddl.selectedField.showUrl">
+        <tr>
+            <td>Поле URL</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.urlSubfield" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+        <tr>
+            <td>префикс URL</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.urlPrefix" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+        <tr>
+            <td>постфикс URL</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.urlPostfix" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+    </tbody>
 
 
 

@@ -12,6 +12,11 @@ namespace app.Controllers
         public string dictId { get; set; }
         // public string dictMultiSelect { get; set; }
 
+        public bool showUrl { get; set; }
+        public string urlSubfield { get; set; }
+        public string urlPrefix { get; set; }
+        public string urlPostfix { get; set; }
+
         internal void SetFrom(mdField field)
         {
             //this.name = field.name;
@@ -23,6 +28,10 @@ namespace app.Controllers
             this.dictId = field.dictId;
             // this.dictMultiSelect = field.dictMultiSelect;
 
+            this.showUrl = field.showUrl;
+            this.urlSubfield = field.urlSubfield;
+            this.urlPrefix = field.urlPrefix;
+            this.urlPostfix = field.urlPostfix;
         }
 
         internal void SetValue(TableRow newRow, string val)

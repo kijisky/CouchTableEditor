@@ -2,7 +2,16 @@
 
 <span ng-if="!row.IsEditing['@Model.name']">
     <button ng-click="row.IsEditing['@Model.name']=true">E</button>
-    <span>{{ row.data['@Model.name'] }}</span>
+
+    @if (Model.showUrl)
+    {
+        <a href="@Model.urlPrefix{{row.data['@Model.name']}}@Model.urlPostfix">{{ row.data['@Model.name'] }}</a>
+    }
+    else
+    {
+        <span>{{ row.data['@Model.name'] }}</span>
+    }
+
 </span>
 
 
