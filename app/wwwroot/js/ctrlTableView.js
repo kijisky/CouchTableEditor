@@ -5,6 +5,7 @@ tableEditor
         dml.tableCode = null;
         dml.show = {};
         dml.searchString = "";
+        dml.ExtVoc = {};
 
         dml.click = function () {
             console.log(this.tablesList);
@@ -26,10 +27,10 @@ tableEditor
             return ans;
         }
 
-        dml.LoadVocabularies = function(){
+        dml.LoadVocabularies = function () {
             svcVoc.GetVocList().then(function (ajaxData) {
                 dml.vocList = {}
-                for(var vodIndex in ajaxData){
+                for (var vodIndex in ajaxData) {
                     var vocId = ajaxData[vodIndex].id;
                     var vocTerms = ajaxData[vodIndex].termsList;
                     dml.vocList[vocId] = vocTerms;
@@ -46,6 +47,29 @@ tableEditor
                 $scope.$apply();
             })
         }
+        dml.StartEditVoc = function (row, fieldName, dictID) {
+            if (!row.IsEditing) {
+                row.IsEditing = {};
+            }
+            row.IsEditing[fieldName] = true;
+        }
+
+        dml.StartEditExtVoc = function (row, fieldName, extUrl, extPath, termId, termName) {
+            if (!row.IsEditing) {
+                row.IsEditing = {};
+            }
+            row.IsEditing[fieldName] = true;
+
+            if (!dml.ExtVoc[fieldName]) {
+                svcVoc.LoadExternalVocabulary(extUrl, extPath, termId, termName).then(function (termsList) {
+                    dml.ExtVoc[fieldName] = termsList;
+                    logger.log("ext voc loaded");
+                    $scope.$apply();
+                })
+            }
+        }
+
+
 
         dml.AddRow = function () {
             dml.rowsList.push({ IsNew: true });

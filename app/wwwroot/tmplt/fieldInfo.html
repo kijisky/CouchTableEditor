@@ -16,6 +16,7 @@
                     <option value="number">Число</option>
                     <option value="text">Текст</option>
                     <option value="dict">Словарь</option>
+                    <option value="extdict">Внешний Словарь</option>
                     <option value="subclass">Подкласс</option>
                     <option value="array">Массов</option>
                 </select>
@@ -95,6 +96,37 @@
     </tbody>
 
 
+    <tbody ng-show="ddl.selectedField.type=='extdict'">
+        <tr>
+            <td colspan="2">Внешний словарь</td>
+        </tr>
+
+        <tr>
+            <td>rest URL - список терминов</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.extUrlGet" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+        <tr>
+            <td>JSON path - список</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.extJsonPath" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+        <tr>
+            <td>Поле ID</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.extFieldID" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+        <tr>
+            <td>Поле Название</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.extFieldName" ng-change="ddl.OnEditField()">
+            </td>
+        </tr>
+      
+    </tbody>
 
 
 </table>

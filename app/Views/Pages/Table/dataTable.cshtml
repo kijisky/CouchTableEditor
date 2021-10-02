@@ -32,6 +32,10 @@
                     {
                         <partial name="fieldDict.cshtml" model="fld" />
                     }
+                    else if (fld.type == "extdict")
+                    {
+                        <partial name="fieldExtDict.cshtml" model="fld" />
+                    }
                     else
                     {
                         <partial name="fieldText.cshtml" model="fld" />

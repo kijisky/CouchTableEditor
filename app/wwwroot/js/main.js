@@ -141,15 +141,15 @@ tableEditor.factory('svcVoc', function (config) {
                 body: JSON.stringify(vocData)
             });
             return t;
-        },     
-        
+        },
+
         DeleteVoc: function (vocId, vocData) {
             var url = config.baseUrl + "vocabulary/" + vocId;
             var t = fetch(url, {
                 method: "DELETE"
             });
             return t;
-        },              
+        },
 
         GetVocTerms: function (vocId) {
             var urlGetRows = config.baseUrl + "vocabulary/" + vocId + "/terms/";
@@ -161,7 +161,7 @@ tableEditor.factory('svcVoc', function (config) {
             return t;
         },
 
-        SaveTerm: function (vocId, termId,  termData) {
+        SaveTerm: function (vocId, termId, termData) {
             var url = config.baseUrl + "vocabulary/" + vocId + "/term/" + termId;
             var t = fetch(url, {
                 method: "PUT",
@@ -180,8 +180,30 @@ tableEditor.factory('svcVoc', function (config) {
 
             });
             return t;
-        },        
-        
+        },
+
+        LoadExternalVocabulary: function (extUrl, extPath, pTermId, pTermName) {
+            var t = fetch(extUrl);
+            t = t.then(function (resp) {
+                return resp.json();
+            }).then(function (respJson) {
+                var termsList = respJson;
+                if (extPath) {
+                    termsList = eval("termsList." + extPath);
+                }
+                var ans = termsList.map(function (extTerm) {
+                    newTerm = {
+                        "id": eval("extTerm." + pTermId),
+                        "name": eval("extTerm." + pTermName)
+                    };
+                    return newTerm;
+                });
+                ans.sort((a, b) => a.name > b.name && 1 || -1)
+                return ans;
+            })
+            return t;
+        },
+
         log: function (x) {
             console.log("message: " + x);
             console.log(config.baseUrl);

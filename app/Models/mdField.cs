@@ -17,6 +17,13 @@ namespace app.Controllers
         public string urlPrefix { get; set; }
         public string urlPostfix { get; set; }
 
+
+        public string extUrlGet { get; set; }
+        public string extJsonPath { get; set; }
+        public string extFieldID { get; set; }
+        public string extFieldName { get; set; }
+
+
         internal void SetFrom(mdField field)
         {
             //this.name = field.name;
@@ -32,6 +39,13 @@ namespace app.Controllers
             this.urlSubfield = field.urlSubfield;
             this.urlPrefix = field.urlPrefix;
             this.urlPostfix = field.urlPostfix;
+
+
+            this.extUrlGet = field.extUrlGet;
+            this.extJsonPath = field.extJsonPath;
+            this.extFieldID = field.extFieldID;
+            this.extFieldName = field.extFieldName;
+
         }
 
         internal void SetValue(TableRow newRow, string val)
