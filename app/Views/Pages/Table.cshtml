@@ -6,6 +6,27 @@
     td {
         vertical-align: top;
     }
+
+    tr.selected {
+        background-color: yellow;
+    }
+
+    div.popupWin {
+        background: white;
+        border: solid 5px;
+        overflow-y: scroll;
+
+
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        right: 10%;
+        bottom: 10%;
+    }
+
+    .rightAlign {
+        float: right;
+    }
 </style>
 
 
@@ -22,11 +43,11 @@
         <table>
             <tr>
                 <td style="vertical-align: top">
-                   <ul>
+                    <ul>
                         <li>
                             <input type="checkbox" ng-model="dml.show['_id']">ID
                         </li>
-                        
+
                         @foreach (var fld in Model.table.fields)
                         {
                             <li>
@@ -36,16 +57,19 @@
                         }
 
                     </ul>
-                    
+
                 </td>
                 <td>
                     Search: <input name="tableSearch" type="text" ng-model="dml.searchString"
                         ng-model-options='{ debounce: 1000 }'>
-                        <partial name="Table/dataTable.cshtml" />
+                    <partial name="Table/dataTable.cshtml" />
                 </td>
             </tr>
         </table>
 
+        <div ng-if="dml.selectedRow.data" ng-init="row=dml.selectedRow" class="popupWin">
+            <partial name="Table/rowCard.cshtml" />
+        </div>
     </div>
 </div>
 

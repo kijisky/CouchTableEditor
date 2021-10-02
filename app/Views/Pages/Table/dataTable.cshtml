@@ -5,7 +5,13 @@
             <td ng-if="dml.show['_id']">ID</td>
             @foreach (var fld in Model.table.fields)
             {
-                <th ng-if="dml.show['@fld.name']">@(fld.alias ?? fld.name)</th>
+                <th ng-if="dml.show['@fld.name']">
+                    @(fld.alias ?? fld.name)
+                    @if (fld.descr != null && fld.descr != "")
+                    {
+                        <a href="#" title="@fld.descr">[?]</a>
+                    }
+                </th>
             }
         </tr>
     </thead>
@@ -16,9 +22,10 @@
             </td>
         </tr>
 
-        <tr ng-repeat="row in dml.rowsList | filter:dml.searchString" ng-click="dml.SelectRow(row)">
+        <tr ng-repeat="row in dml.rowsList | filter:dml.searchString" ng-click="dml.SelectRow(row)"
+            ng-class="{'selected' : row.data==dml.selectedRow.data }">
             <td>
-                <button ng-click="dml.SaveRow(row)" ng-show="row.dirty||row.IsNew">Save</button>
+                <button ng-click="dml.SaveRow(row)" ng-show="row.IsDirty||row.IsNew">Save</button>
                 <button ng-click="dml.OpenCard(row)">Open</button>
             </td>
             <td ng-if="dml.show['_id']">

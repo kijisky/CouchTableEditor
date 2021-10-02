@@ -81,6 +81,15 @@ tableEditor.factory('svcDML', function (config) {
             })
             return t;
         },
+        GetRow: function (tblId, rowId) {
+            var urlGetRows = config.baseUrl + "table/" + tblId + "/rows/" + rowId;
+
+            var t = fetch(urlGetRows);
+            t = t.then(function (resp) {
+                return resp.json();
+            })
+            return t;
+        },
 
         SaveRow: function (tblId, rowId, rowData) {
             var url = rowId ? config.baseUrl + "table/" + tblId + "/rows/" + rowId :
@@ -94,7 +103,7 @@ tableEditor.factory('svcDML', function (config) {
             });
             return t;
         },
-        DeleteRow: function (tblId, rowId, rowData) {
+        DeleteRow: function (tblId, rowId) {
             var t = fetch(config.baseUrl + "table/" + tblId + "/rows/" + rowId, {
                 method: "DELETE"
             });

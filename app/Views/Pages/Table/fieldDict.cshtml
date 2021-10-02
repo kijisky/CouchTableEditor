@@ -16,7 +16,7 @@
 <span ng-if="row.IsEditing['@Model.name']">
     <i class="bi bi-check-lg" ng-click="row.IsEditing['@Model.name']=false"></i>
 
-    <select ng-model="row.data.@Model.name" ng-change="row.dirty=true"
+    <select ng-model="row.data.@Model.name" ng-change="dml.MarkRowDirty(row)"
         ng-options="term as term.name for term in dml.vocList['@Model.dictId'] track by term.name">
     </select>
 </span>
