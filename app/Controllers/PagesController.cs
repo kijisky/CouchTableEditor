@@ -15,13 +15,10 @@ namespace app.Controllers
         private readonly ILogger<PagesController> _logger;
         private readonly DBManagerClass db;
 
-        public PagesController(IConfiguration config, ILogger<PagesController> logger)
+        public PagesController(DBManagerClass dbMgr, ILogger<PagesController> logger)
         {
             _logger = logger;
-            var host = config.GetValue<string>("Couchdb:host");
-            var user = config.GetValue<string>("Couchdb:user");
-            var pass = config.GetValue<string>("Couchdb:password");
-            this.db = new DBManagerClass(host, user, pass);
+            this.db = dbMgr;
         }
 
         [HttpGet("/DDL/")]

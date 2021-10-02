@@ -16,13 +16,10 @@ namespace app.Controllers
         private DBManagerClass db;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IConfiguration config, ILogger<HomeController> logger)
+        public HomeController(DBManagerClass dbMgr, ILogger<HomeController> logger)
         {
             _logger = logger;
-            var host = config.GetValue<string>("Couchdb:host");
-            var user = config.GetValue<string>("Couchdb:user");
-            var pass = config.GetValue<string>("Couchdb:password");
-            this.db = new DBManagerClass(host, user, pass);
+            this.db = dbMgr;
         }
 
         public IActionResult Index()
@@ -33,7 +30,7 @@ namespace app.Controllers
         [HttpGet("/Test/filldata/{tableCode}")]
         public IActionResult TestFillData(string tableCode, int rows = 100)
         {
-            
+
             var tblMetadata = this.db.GetTable(tableCode);
 
 

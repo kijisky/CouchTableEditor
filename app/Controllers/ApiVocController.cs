@@ -15,14 +15,10 @@ namespace app.Controllers
         private readonly ILogger<ApiVocController> _logger;
         private readonly DBManagerClass db;
 
-        public ApiVocController(IConfiguration config, ILogger<ApiVocController> logger)
+        public ApiVocController(DBManagerClass dbMgr, ILogger<ApiVocController> logger)
         {
             _logger = logger;
-
-            var host = config.GetValue<string>("Couchdb:host");
-            var user = config.GetValue<string>("Couchdb:user");
-            var pass = config.GetValue<string>("Couchdb:password");
-            this.db = new DBManagerClass(host, user, pass);
+            this.db = dbMgr;
         }
 
         [HttpGet("/api/vocabulary")]

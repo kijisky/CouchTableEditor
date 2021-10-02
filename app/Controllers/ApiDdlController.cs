@@ -15,12 +15,9 @@ namespace app.Controllers
         private readonly ILogger<ApiDdlController> _logger;
         private readonly DBManagerClass db;
 
-        public ApiDdlController(IConfiguration config, ILogger<ApiDdlController> logger)
+        public ApiDdlController(DBManagerClass dbMgr, ILogger<ApiDdlController> logger)
         {
-            var host = config.GetValue<string>("Couchdb:host");
-            var user = config.GetValue<string>("Couchdb:user");
-            var pass = config.GetValue<string>("Couchdb:password");
-            this.db = new DBManagerClass(host, user, pass);
+            this.db = dbMgr;
             _logger = logger;
         }
 

@@ -6,7 +6,7 @@ using CouchDB.Driver;
 
 namespace app.Controllers
 {
-    internal class DBManagerClass
+    public class DBManagerClass
     {
         private CouchClient client;
 

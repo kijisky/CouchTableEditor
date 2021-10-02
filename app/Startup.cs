@@ -29,6 +29,15 @@ namespace app
             {
                 options.AllowSynchronousIO = true;
             });
+
+            services.AddSingleton<Controllers.DBManagerClass>((svc) =>
+            {
+                var host = Configuration.GetValue<string>("Couchdb:host");
+                var user = Configuration.GetValue<string>("Couchdb:user");
+                var pass = Configuration.GetValue<string>("Couchdb:password");
+                var dbConnection = new Controllers.DBManagerClass(host, user, pass);
+                return dbConnection;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

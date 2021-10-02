@@ -4,7 +4,7 @@ using CouchDB.Driver.Types;
 namespace app.Controllers
 {
 
-    internal class mdTable : CouchDocument
+    public class mdTable : CouchDocument
     {
         public string Name { get; set; }
         public List<mdField> fields { get; set; }

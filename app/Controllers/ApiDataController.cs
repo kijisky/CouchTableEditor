@@ -18,12 +18,9 @@ namespace app.Controllers
         private readonly ILogger<ApiDataController> _logger;
         private readonly DBManagerClass db;
 
-        public ApiDataController(IConfiguration config, ILogger<ApiDataController> logger)
+        public ApiDataController(DBManagerClass dbMgr, ILogger<ApiDataController> logger)
         {
-            var host = config.GetValue<string>("Couchdb:host");
-            var user = config.GetValue<string>("Couchdb:user");
-            var pass = config.GetValue<string>("Couchdb:password");
-            this.db = new DBManagerClass(host, user, pass);
+            this.db = dbMgr;
             _logger = logger;
         }
 
