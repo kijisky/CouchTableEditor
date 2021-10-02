@@ -31,6 +31,17 @@ namespace app.Controllers
             return ans;
         }
 
+        internal IEnumerable<mdField> GetFieldsList()
+        {
+            /// Функция нужна для получения линейного списка из иерархического
+            var ans = new List<mdField>();
+            foreach (var fld in this.fields)
+            {
+                ans.Add(fld);
+            }
+            return ans;
+        }
+
         internal IEnumerable<TableRow> ReadAllRows(IEnumerable<string> fieldsList, object filter = null)
         {
             var rowsDB = this.GetTableDB(this.id);
@@ -41,7 +52,8 @@ namespace app.Controllers
             var mangoQuery = new
             {
                 selector = filter,
-                fields = fieldsList
+                fields = fieldsList,
+                limit = 2000
             };
             var queryTask = rowsDB.QueryAsync(mangoQuery);
             queryTask.Wait();

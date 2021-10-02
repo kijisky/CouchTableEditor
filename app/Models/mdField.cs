@@ -20,5 +20,10 @@ namespace app.Controllers
             this.descr = field.descr;
             this.code = field.code;
         }
+
+        internal void SetValue(TableRow newRow, string val)
+        {
+            newRow.data[this.name] = val;
+        }
     }
 }
