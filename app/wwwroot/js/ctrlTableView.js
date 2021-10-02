@@ -4,6 +4,7 @@ tableEditor
         dml.rowsList = [];
         dml.tableCode = null;
         dml.show = {};
+        dml.searchString = "";
 
         dml.click = function () {
             console.log(this.tablesList);
