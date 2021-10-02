@@ -1,5 +1,5 @@
 ﻿<span ng-if="!row.IsEditing['@Model.name']">
-    <button ng-click="dml.StartEditExtVoc(row, '@Model.name', '@Model.dictId')">E</button>
+    <i class="bi-pencil-square" ng-click="dml.StartEditExtVoc(row, '@Model.name', '@Model.dictId')"></i>
 
     @if (Model.showUrl)
     {
@@ -14,7 +14,8 @@
 
 
 <span ng-if="row.IsEditing['@Model.name']">
-    <button ng-click="row.IsEditing['@Model.name']=false">V</button>
+    <i class="bi bi-check-lg" ng-click="row.IsEditing['@Model.name']=false"></i>
+
     <select ng-model="row.data.@Model.name" ng-change="row.dirty=true"
         ng-options="term as term.name for term in dml.vocList['@Model.dictId'] track by term.name">
     </select>

@@ -2,10 +2,17 @@
 <table border="1">
     <tbody>
         <tr>
-            <td>Название</td>
+            <td>Код</td>
             <td>
                 <input name="fldName" ng-if="ddl.selectedField.IsNew" type="text" ng-model="ddl.OnEditField()">
                 <span ng-if="!ddl.selectedField.IsNew"> {{ddl.selectedField.name}}</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Название</td>
+            <td>
+                <input type="text" ng-model="ddl.selectedField.alias" ng-change="ddl.OnEditField()">
             </td>
         </tr>
 
@@ -22,24 +29,11 @@
                 </select>
             </td>
         </tr>
-
-        <tr>
-            <td>Код</td>
-            <td>
-                <input name="fldCode" type="text" ng-model="ddl.selectedField.code"
-                    ng-change="ddl.selectedField.dirty=true">
-            </td>
-        </tr>
-
-
     </tbody>
 
     <tbody>
         <tr>
-            <td>Синоним</td>
-            <td>
-                <input type="text" ng-model="ddl.selectedField.alias" ng-change="ddl.OnEditField()">
-            </td>
+            <td colspan="2">Информация о поле</td>
         </tr>
 
         <tr>
@@ -125,7 +119,7 @@
                 <input type="text" ng-model="ddl.selectedField.extFieldName" ng-change="ddl.OnEditField()">
             </td>
         </tr>
-      
+
     </tbody>
 
 

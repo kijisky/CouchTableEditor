@@ -11,7 +11,9 @@
         <tr ng-repeat="voc in ctrlVoc.vocList track by $index" ng-click="ctrlVoc.SelectVocabulary(voc)"
             ng-class="{'selected' : voc==ctrlVoc.selectedVocabulary }">
             <td>
-                <button ng-show="voc.IsNew || voc.IsDirty" ng-click="ctrlVoc.SaveVocabulary(voc)">Save</button>
+                <i class="bi bi-check-lg" ng-show="voc.IsNew || voc.IsDirty"
+                    ng-click="ctrlVoc.SaveVocabulary(voc)">Save</i>
+
             </td>
             <td>
                 <span ng-show="!voc.IsEditing" ng-dblclick="voc.IsEditing=true;">{{voc.code}}</span>
@@ -24,8 +26,8 @@
         </tr>
 
         <tr>
-            <td>
-                <button ng-click="ctrlVoc.AddVocabulary()">Add</button>
+            <td colspan="3">
+                <i class="bi bi-plus-circle-fill" ng-click="ctrlVoc.AddVocabulary()">Добавить</i>
             </td>
         </tr>
     </tbody>

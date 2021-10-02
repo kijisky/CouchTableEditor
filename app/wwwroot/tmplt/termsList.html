@@ -1,5 +1,5 @@
-_ <button ng-show="ctrl.selectedVocabulary.IsNew || ctrl.selectedVocabulary.IsDirty"
-    ng-click="ctrlVoc.SaveVocabulary(ctrl.selectedVocabulary)">Save</button>
+<i class="bi bi-plus-circle-fill" ng-show="ctrl.selectedVocabulary.IsNew || ctrl.selectedVocabulary.IsDirty"
+    ng-click="ctrlVoc.SaveVocabulary(ctrl.selectedVocabulary)">Сохранить</i>
 
 <table border="1">
     <thead>
@@ -13,7 +13,7 @@ _ <button ng-show="ctrl.selectedVocabulary.IsNew || ctrl.selectedVocabulary.IsDi
         <tr ng-repeat="term in ctrlVoc.termsList track by $index" ng-click="ctrlVoc.SelectTerm(term)"
             ng-class="{'selected' : term==ctrlVoc.selectedTerm }">
             <td>
-                <button ng-click="ctrlVoc.RemoveTerm(term)">X</button>
+                <i class="bi bi-x-circle-fill" ng-click="ctrlVoc.RemoveTerm(term)"></i>
             </td>
             <td>
                 <input ng-model="term.name">
@@ -21,8 +21,8 @@ _ <button ng-show="ctrl.selectedVocabulary.IsNew || ctrl.selectedVocabulary.IsDi
         </tr>
 
         <tr>
-            <td>
-                <button ng-click="ctrlVoc.AddTerm()">Add</button>
+            <td colspan="2">
+                <i class="bi bi-plus-circle-fill bi-green" ng-click="ctrlVoc.AddTerm()">Добавить термин</i>
             </td>
         </tr>
     </tbody>

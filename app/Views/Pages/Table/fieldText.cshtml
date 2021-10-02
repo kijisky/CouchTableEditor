@@ -1,7 +1,7 @@
 ﻿@model app.Controllers.mdField
 
 <span ng-if="!row.IsEditing['@Model.name']">
-    <button ng-click="row.IsEditing['@Model.name']=true">E</button>
+    <i class="bi bi-pencil-square" ng-click="row.IsEditing['@Model.name']=true"></i>
 
     @if (Model.showUrl)
     {
@@ -11,11 +11,10 @@
     {
         <span>{{ row.data['@Model.name'] }}</span>
     }
-
 </span>
 
 
 <span ng-if="row.IsEditing['@Model.name']">
-    <button ng-click="row.IsEditing['@Model.name']=false">V</button>
+    <i class="bi bi-check-lg" ng-click="row.IsEditing['@Model.name']=false"></i>
     <input type=" text" ng-model="row.data.@Model.name" ng-change="row.dirty=true">
 </span>
