@@ -55,11 +55,27 @@ namespace app.Controllers
         }
 
 
+        [HttpPut("/api/table/{tableCode}/rows/")]
+        public IActionResult AddTableRow(string tableCode)
+        {
+            TableRow tableRow = null;
+            using (StreamReader stream = new StreamReader(HttpContext.Request.Body))
+            {
 
+                string body = stream.ReadToEnd();
+                // body = "param=somevalue&param2=someothervalue"
+                tableRow = JsonConvert.DeserializeObject<TableRow>(body);
+            }
+            var tbl = this.db.GetTable(tableCode);
+
+
+            var ans = tbl.UpdateRow(null, tableRow);
+            return Json(ans);
+        }
 
 
         [HttpPut("/api/table/{tableCode}/rows/{rowID}")]
-        public IActionResult ChangeTableRow(string tableCode, string rowID)//, [FromBody] string tableRowJson)
+        public IActionResult ChangeTableRow(string tableCode, string rowID = null)//, [FromBody] string tableRowJson)
         {
             TableRow tableRow = null;
             using (StreamReader stream = new StreamReader(HttpContext.Request.Body))

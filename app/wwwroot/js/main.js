@@ -83,7 +83,9 @@ tableEditor.factory('svcDML', function (config) {
         },
 
         SaveRow: function (tblId, rowId, rowData) {
-            var t = fetch(config.baseUrl + "table/" + tblId + "/rows/" + rowId, {
+            var url = rowId ? config.baseUrl + "table/" + tblId + "/rows/" + rowId :
+                config.baseUrl + "table/" + tblId + "/rows/";
+            var t = fetch(url, {
                 method: "PUT",
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
