@@ -75,6 +75,13 @@ namespace app.Controllers
             return (ans);
         }
 
+        internal TableRow GetRow(string rowID)
+        {
+            var rowsDB = this.GetTableDB(this.id);
+            var ans = rowsDB.Where(r => r.Id == rowID).ToArray().FirstOrDefault();
+            return ans;
+        }
+
         private TableRow GetTableRow(string rowID)
         {
             var rowsDB = this.GetTableDB(this.id);

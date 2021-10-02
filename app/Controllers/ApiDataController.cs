@@ -43,16 +43,14 @@ namespace app.Controllers
         [HttpGet("/api/table/{tableCode}/rows/{rowID}")]
         public IActionResult GetTableRow(string tableCode, string rowID)
         {
-
-            return Json("DDL");
+            var tbl = this.db.GetTable(tableCode);
+            var dbTableRow = tbl.GetRow(rowID);
+            var dbTableRowJson = JsonConvert.SerializeObject(dbTableRow);
+            return this.Content(dbTableRowJson);
         }
 
 
-        [HttpPut("/api/table/{tableCode}/rows")]
-        public IActionResult AddTableRow(string tableCode, [FromBody] TableRow tableRow)
-        {
-            return Json("DDL");
-        }
+
 
 
         [HttpPut("/api/table/{tableCode}/rows/{rowID}")]
@@ -67,8 +65,11 @@ namespace app.Controllers
                 tableRow = JsonConvert.DeserializeObject<TableRow>(body);
             }
             var tbl = this.db.GetTable(tableCode);
-            var ans = tbl.UpdateRow(rowID, tableRow);
-            return Json(ans);
+
+            var dbTableRow = tbl.GetRow(rowID);
+            dbTableRow.SetData(tableRow);
+            tbl.UpdateRow(rowID, dbTableRow);
+            return this.GetTableRow(tableCode, rowID);
         }
 
 
