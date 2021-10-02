@@ -1,0 +1,35 @@
+Таблица: {{ddl.selectedTable.name}}
+
+<table border="1">
+    <tr>
+        <td></td>
+        <td>Name</td>
+        <td>Type</td>
+    </tr>
+    <tr ng-repeat="fld in ddl.selectedTable.fields" ng-click="ddl.SelectField(fld)"
+        ng-class="{'selected' : fld==ddl.selectedField }">
+        <td>
+            <button ng-click="ddl.SaveField(fld)" ng-if="fld.dirty||fld.IsNew">Save</button>
+            <button ng-click="ddl.DeleteField(fld)">Del</button>
+        </td>
+        <td>
+            <input name="fldName" ng-if="fld.IsNew" type="text" ng-model="fld.name">
+            <span ng-if="!fld.IsNew"> {{fld.name}}</span>
+        </td>
+        <td>
+            <select name="fldType" ng-model="fld.type" ng-change="fld.dirty=true">
+                <option value="number">Число</option>
+                <option value="text">Текст</option>
+                <option value="dict">Словарь</option>
+                <option value="subclass">Подкласс</option>
+                <option value="array">Массов</option>
+            </select>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <button ng-click="ddl.addField()">add field</button>
+        </td>
+    </tr>
+</table>

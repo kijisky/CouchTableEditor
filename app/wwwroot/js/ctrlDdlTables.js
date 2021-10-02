@@ -3,6 +3,7 @@ tableEditor
         ddl = this;
         ddl.tablesList = [];
         ddl.selectedTable = null;
+        ddl.selectedField = null;
 
         ddl.click = function () {
             logger.log("click!");
@@ -16,6 +17,10 @@ tableEditor
                 console.log(ddl.tablesList);
                 $scope.$apply();
             })
+        }
+
+        ddl.SelectField = function (fld) {
+            ddl.selectedField = fld;
         }
 
         ddl.LoadTable = function (pTable) {
