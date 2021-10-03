@@ -34,7 +34,7 @@ tableEditor.factory('svcDDL', function (config) {
         },
 
         SaveField: function (tblId, fld) {
-            var t = fetch(config.baseUrl + "table/" + tblId + "/field/" + fld.name, {
+            var t = fetch(config.baseUrl + "table/" + tblId + "/field/" + fld.path, {
                 method: "PUT",
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
@@ -44,7 +44,7 @@ tableEditor.factory('svcDDL', function (config) {
             return t;
         },
         DeleteField: function (tblId, fld) {
-            var t = fetch(config.baseUrl + "table/" + tblId + "/field/" + fld.name, {
+            var t = fetch(config.baseUrl + "table/" + tblId + "/field/" + fld.path, {
                 method: "DELETE"
             });
             return t;
