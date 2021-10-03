@@ -103,9 +103,15 @@ div.popupWin {
   overflow-y: scroll;
 
 
-  position: absolute;
+  position: fixed;
   top: 20%;
   left: 20%;
   right: 10%;
   bottom: 10%;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: lightgray;
 }
