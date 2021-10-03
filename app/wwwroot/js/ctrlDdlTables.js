@@ -42,7 +42,14 @@ tableEditor
             })
         }
 
-        ddl.addField = function () {
+        ddl.addChildFieldTo = function (fldDesc) {
+            if (!fldDesc.children) {
+                fldDesc.children = [];
+            }
+            fldDesc.children.push({ IsNew: true });
+        }
+
+        ddl.addRootField = function () {
             if (!ddl.selectedTable) return;
             ddl.selectedTable.fields.push({ IsNew: true });
         }
@@ -60,7 +67,7 @@ tableEditor
         ddl.DeleteField = function (fld) {
             if (!ddl.selectedTable) return;
             var AreYouSure = confirm('Удалить поле?' + fld.name);
-            if (!AreYouSure){
+            if (!AreYouSure) {
                 return;
             }
 

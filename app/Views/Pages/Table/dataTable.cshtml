@@ -5,13 +5,7 @@
             <td ng-if="dml.show['_id']">ID</td>
             @foreach (var fld in Model.table.fields)
             {
-                <th ng-if="dml.show['@fld.name']">
-                    @(fld.alias ?? fld.name)
-                    @if (fld.descr != null && fld.descr != "")
-                    {
-                        <a href="#" title="@fld.descr">[?]</a>
-                    }
-                </th>
+                <partial name="dataTableHead.cshtml" model="fld" />
             }
         </tr>
     </thead>
@@ -22,11 +16,11 @@
             </td>
         </tr>
 
-        <tr ng-repeat="row in dml.rowsList | filter:dml.searchString" ng-click="dml.SelectRow(row)"
+        <tr ng-repeat="row in dml.rowsList | filter:dml.searchString" 
             ng-class="{'selected' : row.data==dml.selectedRow.data }">
             <td>
                 <button ng-click="dml.SaveRow(row)" ng-show="row.IsDirty||row.IsNew">Save</button>
-                <button ng-click="dml.OpenCard(row)">Open</button>
+                <button ng-click="dml.SelectRow(row)">Open</button>
             </td>
             <td ng-if="dml.show['_id']">
                 {{row._id}}
@@ -34,22 +28,7 @@
 
             @foreach (var fld in Model.table.fields)
             {
-                <td ng-if="dml.show['@fld.name']">
-                    @if (fld.type == "dict")
-                    {
-                        <partial name="fieldDict.cshtml" model="fld" />
-                    }
-                    else if (fld.type == "extdict")
-                    {
-                        <partial name="fieldExtDict.cshtml" model="fld" />
-                    }
-                    else
-                    {
-                        <partial name="fieldText.cshtml" model="fld" />
-                    }
-
-
-                </td>
+                <partial name="dataTableCell.cshtml" model="fld" />
             }
 
         </tr>

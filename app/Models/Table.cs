@@ -21,6 +21,9 @@ namespace app.Controllers
             {
                 this.tableData = new mdTable();
             }
+
+            this.CalculateFeildsDepth();
+            this.CalculateFeildsPaths(this.fields);
         }
 
         internal static Table GetByCode(CouchClient client, string pId)
@@ -143,6 +146,72 @@ namespace app.Controllers
                 this.fields.Remove(fld);
             }
             this.Save();
+        }
+
+
+        private void CalculateFeildsPaths(IEnumerable<mdField> fieldsList, string baseName = null)
+        {
+            foreach (var fld in fieldsList)
+            {
+                fld.Path = (baseName != null ? baseName + "." : "") + fld.name;
+                if (fld.children != null)
+                {
+                    this.CalculateFeildsPaths(fld.children, fld.Path);
+                }
+            }
+        }
+
+
+        private void CalculateFeildsDepth()
+        {
+            var maxDepth = this.GetMaxDepth(this.fields);
+            this.CalculateSpans(this.fields, 0, maxDepth);
+        }
+
+        private void CalculateSpans(IEnumerable<mdField> fieldsList, int vCurDepth, int maxDepth)
+        {
+            if (fieldsList == null || fieldsList.Count() == 0) return;
+            foreach (var fld in fieldsList)
+            {
+                fld.spanDepth = maxDepth - vCurDepth;
+                fld.spanDepthDiff = vCurDepth;
+                fld.spanWidth = this.CalcFieldsWidth(fld);
+                this.CalculateSpans(fld.children, vCurDepth + 1, maxDepth);
+            }
+        }
+
+        private int CalcFieldsWidth(mdField pField)
+        {
+            if (pField.children == null || pField.children.Count() == 0)
+            {
+                return 1;
+            }
+
+            int totalWidth = 0;
+            foreach (var chldField in pField.children)
+            {
+                totalWidth += this.CalcFieldsWidth(chldField);
+            }
+            return totalWidth;
+
+        }
+
+        private int GetMaxDepth(IEnumerable<mdField> fields)
+        {
+            if (fields == null || fields.Count() == 0)
+            {
+                return 0;
+            }
+            var maxDepth = 0;
+            foreach (var fld in fields)
+            {
+                var depth = this.GetMaxDepth(fld.children);
+                if (depth > maxDepth)
+                {
+                    maxDepth = depth;
+                }
+            }
+            return maxDepth + 1;
         }
     }
 }

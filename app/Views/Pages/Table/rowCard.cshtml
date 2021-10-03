@@ -5,37 +5,11 @@
 </span>
 
 
-
-
 <table border="1" style="width: 100%;">
-
-    @foreach (var fld in Model.table.fields)
-    {
-        <tr>
-            <td>
-                @(fld.alias ?? fld.name)
-                @if (fld.descr != null && fld.descr != "")
-                {
-                    <a href="#" title="@fld.descr">[?]</a>
-                }
-            </td>
-
-            <td>
-                @if (fld.type == "dict")
-                {
-                    <partial name="fieldDict.cshtml" model="fld" />
-                }
-                else if (fld.type == "extdict")
-                {
-                    <partial name="fieldExtDict.cshtml" model="fld" />
-                }
-                else
-                {
-                    <partial name="fieldText.cshtml" model="fld" />
-                }
-
-
-            </td>
-        </tr>
-    }
+    <tbody>
+        @foreach (var subFld in Model.table.fields)
+        {
+            <partial name="rowCardRow.cshtml" model="subFld" />
+        }
+    </tbody>
 </table>

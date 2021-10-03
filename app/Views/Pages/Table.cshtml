@@ -23,10 +23,8 @@
 
                         @foreach (var fld in Model.table.fields)
                         {
-                            <li>
-                                <input type="checkbox" ng-model="dml.show['@fld.name']" ng-change="dml.LoadRows()">
-                                @(fld.alias ?? fld.name)
-                            </li>
+                            <partial name="FieldSelector.cshtml" model="fld" />
+                            
                         }
 
                     </ul>

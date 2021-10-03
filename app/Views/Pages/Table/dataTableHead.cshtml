@@ -1,0 +1,20 @@
+﻿@model app.Controllers.mdField
+
+<th ng-if="dml.show['@Model.Path']">
+    @if (Model.type == "subclass")
+    {
+        @foreach (var subFld in Model.children)
+        {
+            <partial name="dataTableHead.cshtml" model="subFld" />
+        }
+    }
+    else
+    {
+        <span>@(Model.alias ?? Model.name)</span>
+
+        @if (Model.descr != null && Model.descr != "")
+        {
+            <a href="#" title="@Model.descr">[?]</a>
+        }
+    }
+</th>

@@ -1,0 +1,36 @@
+<tr ng-click="ddl.SelectField(fld)" ng-class="{'selected' : fld==ddl.selectedField }">
+    <td>
+        <i class="bi bi-check-lg" ng-click="ddl.SaveField(fld)" ng-if="fld.IsDirty||fld.IsNew"></i>
+        <i class="bi bi-x-circle-fill delButton" ng-click="ddl.DeleteField(fld)" ng-if="!fld.IsDirty"></i>
+    </td>
+    <td>
+        <input name="fldName" ng-if="fld.IsNew" type="text" ng-model="fld.name">
+        <span ng-if="!fld.IsNew"> {{fld.name}}</span>
+    </td>
+    <td>
+        <input name="fldAslias" ng-if="fld.IsNew" type="text" ng-model="fld.alias">
+        <span ng-if="!fld.IsNew"> {{fld.alias}}</span>
+    </td>
+</tr>
+
+<tr ng-if="fld.type=='subclass' || fld.type=='subarray'">
+    <td></td>
+    <td colspan="2">
+        <table border="1">
+            <tr>
+                <td></td>
+                <td>Код</td>
+                <td>Имя</td>
+            </tr>
+            <tbody ng-repeat="fld in fld.children" ng-include="'tmplt/fieldsListRow.html'">
+
+            </tbody>
+
+            <tr>
+                <td colspan="3">
+                    <i class="bi bi-plus-circle-fill addButton" ng-click="ddl.addChildFieldTo(fld)">Добавить поле</i>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>

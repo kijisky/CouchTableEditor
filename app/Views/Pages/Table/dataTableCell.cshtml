@@ -1,0 +1,23 @@
+﻿@model app.Controllers.mdField
+
+<td ng-if="dml.show['@Model.Path']">
+    @if (Model.type == "subclass")
+    {
+        @foreach (var subFld in Model.children)
+        {
+            <partial name="dataTableCell.cshtml" model="subFld" />
+        }
+    }
+    else if (Model.type == "dict")
+    {
+        <partial name="fieldDict.cshtml" model="Model" />
+    }
+    else if (Model.type == "extdict")
+    {
+        <partial name="fieldExtDict.cshtml" model="Model" />
+    }
+    else
+    {
+        <partial name="fieldText.cshtml" model="Model" />
+    }
+</td>

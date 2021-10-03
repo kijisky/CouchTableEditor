@@ -1,0 +1,19 @@
+﻿@model app.Controllers.mdField
+
+
+<li>
+    <input type="checkbox" ng-model="dml.show['@Model.Path']" ng-change="dml.LoadRows()">
+    @(Model.alias ?? Model.name) 
+    @* <span> @Model.spanDepth / @Model.spanWidth </span> *@
+
+    @if (Model.children != null && Model.children.Length > 0)
+    {
+        <ul>
+            @foreach (var fld in Model.children)
+            {
+                <partial name="FieldSelector.cshtml" model="fld" />
+            }
+
+        </ul>
+    }
+</li>

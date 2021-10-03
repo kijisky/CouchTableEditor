@@ -1,22 +1,22 @@
-﻿<span ng-if="!row.IsEditing['@Model.name']">
-    <i class="bi-pencil-square" ng-click="dml.StartEditExtVoc(row, '@Model.name', '@Model.dictId')"></i>
+﻿<span ng-if="!row.IsEditing['@Model.Path']">
+    <i class="bi-pencil-square" ng-click="dml.StartEditExtVoc(row, '@Model.Path', '@Model.dictId')"></i>
 
     @if (Model.showUrl)
     {
-        <a href="@Model.urlPrefix{{ row.data['@Model.name'].id }}@Model.urlPostfix">{{ row.data['@Model.name'].name }}</a>
+        <a href="@Model.urlPrefix{{ row.data['@Model.Path'].id }}@Model.urlPostfix">{{ row.data['@Model.Path'].name }}</a>
     }
     else
     {
-        <span>{{ row.data['@Model.name'].name }}</span>
+        <span>{{ row.data['@Model.Path'].name }}</span>
     }
 
 </span>
 
 
-<span ng-if="row.IsEditing['@Model.name']">
-    <i class="bi bi-check-lg" ng-click="row.IsEditing['@Model.name']=false"></i>
+<span ng-if="row.IsEditing['@Model.Path']">
+    <i class="bi bi-check-lg" ng-click="row.IsEditing['@Model.Path']=false"></i>
 
-    <select ng-model="row.data.@Model.name" ng-change="dml.MarkRowDirty(row)"
+    <select ng-model="row.data.@Model.Path" ng-change="dml.MarkRowDirty(row)"
         ng-options="term as term.name for term in dml.vocList['@Model.dictId'] track by term.name">
     </select>
 </span>

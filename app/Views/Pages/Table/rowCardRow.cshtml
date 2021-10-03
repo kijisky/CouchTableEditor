@@ -1,0 +1,64 @@
+﻿@model app.Controllers.mdField
+
+@{
+    /// Расчет видимости - собираем всех родитилей которые должны быть видимы, чтобы видился этот элемент
+    var dependPathsList = Model.GetDependentParentPaths();
+    var ngIfExpression = "true ";
+    foreach (var depPath in dependPathsList)
+    {
+        ngIfExpression += " && showRow['" + depPath + "']";
+    }
+}
+
+<tr ng-show="@ngIfExpression">
+    @for (var tab = 0; tab < Model.spanDepthDiff; tab++)
+    {
+        <td>&nbsp</td>
+    }
+    <td colspan="@Model.spanDepth">
+
+        @if (Model.type == "subclass")
+        {
+            <input type="checkbox" ng-model="showRow['@Model.Path']">
+            <b>@(Model.alias ?? Model.name)</b>
+        }
+        else
+        {
+            @(Model.alias ?? Model.name)
+        }
+
+
+        @if (Model.descr != null && Model.descr != "")
+        {
+            <a href="#" title="@Model.descr">[?]</a>
+        }
+
+    </td>
+
+    <td>
+        @if (Model.type == "subclass")
+        {
+            <span></span>
+        }
+        else if (Model.type == "dict")
+        {
+            <partial name="fieldDict.cshtml" model="Model" />
+        }
+        else if (Model.type == "extdict")
+        {
+            <partial name="fieldExtDict.cshtml" model="Model" />
+        }
+        else
+        {
+            <partial name="fieldText.cshtml" model="Model" />
+        }
+    </td>
+</tr>
+
+@if (Model.HasChildren())
+{
+    @foreach (var subFld in Model.children)
+    {
+        <partial name="rowCardRow.cshtml" model="subFld" />
+    }
+}

@@ -1,20 +1,20 @@
 ﻿@model app.Controllers.mdField
 
-<span ng-if="!row.IsEditing['@Model.name']">
-    <i class="bi bi-pencil-square" ng-click="row.IsEditing['@Model.name']=true"></i>
+<span ng-if="!row.IsEditing['@Model.Path']">
+    <i class="bi bi-pencil-square" ng-click="row.IsEditing['@Model.Path']=true"></i>
 
     @if (Model.showUrl)
     {
-        <a href="@Model.urlPrefix{{row.data['@Model.name']}}@Model.urlPostfix">{{ row.data['@Model.name'] }}</a>
+        <a href="@Model.urlPrefix{{row.data.@Model.Path}}@Model.urlPostfix">{{ row.data.@Model.Path }}</a>
     }
     else
     {
-        <span>{{ row.data['@Model.name'] }}</span>
+        <span>{{ row.data.@Model.Path }}</span>
     }
 </span>
 
 
-<span ng-if="row.IsEditing['@Model.name']">
-    <i class="bi bi-check-lg" ng-click="row.IsEditing['@Model.name']=false"></i>
-    <input type=" text" ng-model="row.data.@Model.name" ng-change="dml.MarkRowDirty(row)">
+<span ng-if="row.IsEditing['@Model.Path']">
+    <i class="bi bi-check-lg" ng-click="row.IsEditing['@Model.Path']=false"></i>
+    <input type=" text" ng-model="row.data.@Model.Path" ng-change="dml.MarkRowDirty(row)">
 </span>

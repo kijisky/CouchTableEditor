@@ -28,6 +28,8 @@
                     <div ng-include="'/tmplt/tablesList.html'"></div>
                 </td>
                 <td class="mainTbl">
+                    Таблица: {{ddl.selectedTable.name}}
+
                     <div ng-show="ddl.selectedTable != null" ng-include="'/tmplt/fieldsList.html'"></div>
                 </td>
                 <td class="mainTbl">
