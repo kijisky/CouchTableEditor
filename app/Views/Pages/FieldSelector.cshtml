@@ -6,7 +6,7 @@
     @(Model.alias ?? Model.name) 
     @* <span> @Model.spanDepth / @Model.spanWidth </span> *@
 
-    @if (Model.children != null && Model.children.Length > 0)
+    @if (Model.HasChildren())
     {
         <ul>
             @foreach (var fld in Model.children)

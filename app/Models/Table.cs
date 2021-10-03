@@ -119,10 +119,19 @@ namespace app.Controllers
 
         internal void SetField(string codeField, mdField field)
         {
-            var fld = this.fields.Where(f => f.name == codeField).FirstOrDefault();
+            var fld = this.FindFieldByPath(codeField);
+
             if (fld == null)
             {
-                this.fields.Add(field);
+                var fldParent = this.FindFieldByPath(codeField, -1);
+                if (fldParent != null)
+                {
+                    fldParent.children.Add(field);
+                }
+                else
+                {
+                    this.fields.Add(field);
+                }
             }
             else
             {
@@ -140,14 +149,45 @@ namespace app.Controllers
 
         internal void DeleteField(string codeField)
         {
-            var fld = this.fields.Where(f => f.name == codeField).FirstOrDefault();
-            if (fld != null)
+            var fldParent = this.FindFieldByPath(codeField, -1);
+            var fld = this.FindFieldByPath(codeField);
+            if (fld == null)
+            {
+                return;
+            }
+            if (fldParent != null)
+            {
+                fldParent.children.Remove(fld);
+            }
+            else
             {
                 this.fields.Remove(fld);
             }
             this.Save();
         }
 
+        private mdField FindFieldByPath(string codeField, int pDepth = 0)
+        {
+            var pathParts = codeField.Split(".");
+
+            if (pDepth == 0) pDepth = pathParts.Length;
+            if (pDepth < 0) pDepth = pathParts.Length + pDepth;
+            if (pDepth > pathParts.Length) pDepth = pathParts.Length;
+
+            var currLevelFieldsList = this.fields;
+            mdField levelField = null;
+            for (int i = 0; i < pDepth; i++)
+            {
+                var curName = pathParts[i];
+                levelField = currLevelFieldsList.Where(f => f.name == curName).FirstOrDefault();
+                if (levelField == null)
+                {
+                    return null;
+                }
+                currLevelFieldsList = levelField.children;
+            }
+            return levelField;
+        }
 
         private void CalculateFeildsPaths(IEnumerable<mdField> fieldsList, string baseName = null)
         {

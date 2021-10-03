@@ -1,10 +1,10 @@
-Поле: {{ddl.selectedTable.name}}.{{ddl.selectedField.name}}
+Поле: {{ddl.selectedTable.name}} : {{ddl.selectedField.path}}
 <table border="1">
     <tbody>
         <tr>
             <td>Код</td>
             <td>
-                <input name="fldName" ng-if="ddl.selectedField.IsNew" type="text" ng-model="ddl.OnEditField()">
+                <input name="fldName" ng-if="ddl.selectedField.IsNew" type="text" ng-model="ddl.selectedField.name" ng-change="ddl.OnEditField()">
                 <span ng-if="!ddl.selectedField.IsNew"> {{ddl.selectedField.name}}</span>
             </td>
         </tr>
@@ -25,7 +25,7 @@
                     <option value="dict">Словарь</option>
                     <option value="extdict">Внешний Словарь</option>
                     <option value="subclass">Подкласс</option>
-                    <option value="array">Массов</option>
+                    <option value="array">Массив</option>
                 </select>
             </td>
         </tr>

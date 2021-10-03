@@ -29,7 +29,7 @@ namespace app.Controllers
         public string extFieldName { get; set; }
 
 
-        public mdField[] children { get; set; }
+        public List<mdField> children { get; set; }
         public string Path { get; internal set; }
 
         internal void SetFrom(mdField field)
@@ -53,8 +53,6 @@ namespace app.Controllers
             this.extJsonPath = field.extJsonPath;
             this.extFieldID = field.extFieldID;
             this.extFieldName = field.extFieldName;
-
-            this.children = field.children;
         }
 
         internal void SetValue(TableRow newRow, string val)
@@ -83,7 +81,7 @@ namespace app.Controllers
 
         public bool HasChildren()
         {
-            return this.children != null && this.children.Length > 0;
+            return this.children != null && this.children.Count > 0;
         }
     }
 }

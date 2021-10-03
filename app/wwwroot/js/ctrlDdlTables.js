@@ -46,16 +46,27 @@ tableEditor
             if (!fldDesc.children) {
                 fldDesc.children = [];
             }
-            fldDesc.children.push({ IsNew: true });
+
+            var newField = { IsNew: true, parentPath: fldDesc.path };
+            fldDesc.children.push(newField);
         }
 
         ddl.addRootField = function () {
             if (!ddl.selectedTable) return;
-            ddl.selectedTable.fields.push({ IsNew: true });
+            var newField = { IsNew: true, parentPath: null };
+            ddl.selectedTable.fields.push(newField);
         }
 
         ddl.SaveField = function (fld) {
             if (!ddl.selectedTable) return;
+            if (fld.IsNew) {
+                if (fld.parentPath) {
+                    fld.path = fld.parentPath + ".";
+                } else {
+                    fld.path = "";
+                }
+                fld.path += fld.name;
+            }
             svcDDL.SaveField(ddl.selectedTable.id, fld).then(function () {
                 fld.IsNew = false;
                 fld.IsDirty = false;
@@ -73,8 +84,16 @@ tableEditor
 
             svcDDL.DeleteField(ddl.selectedTable.id, fld).then(function () {
                 logger.log("field deleted");
-                var indx = ddl.selectedTable.fields.indexOf(fld);
-                ddl.selectedTable.fields.splice(indx, 1);
+                fldParent = fld.IsNew ?
+                    ddl.FindFieldByPath(fld.parentPath, 0)
+                    : ddl.FindFieldByPath(fld.path, -1);
+
+                parentFieldsList = fldParent ? fldParent.children : ddl.selectedTable.fields;
+
+                var indx = parentFieldsList.indexOf(fld);
+                if (indx > -1) {
+                    parentFieldsList.splice(indx, 1);
+                }
                 $scope.$apply();
             });
         }
@@ -83,6 +102,33 @@ tableEditor
             if (ddl.selectedField != null) {
                 ddl.selectedField.IsDirty = true;
             }
+        }
+
+        ddl.FindFieldByPath = function(codeField, pDepth = 0)
+        {
+            var pathParts = codeField.split(".");
+
+            if (pDepth == 0) pDepth = pathParts.length;
+            if (pDepth < 0) pDepth = pathParts.length + pDepth;
+            if (pDepth > pathParts.Length) pDepth = pathParts.length;
+
+            var currLevelFieldsList = ddl.selectedTable.fields;
+            levelField = null;
+            for (var i = 0; i < pDepth; i++) {
+                var curName = pathParts[i];
+                levelField = null;
+                for (var fld of currLevelFieldsList) {
+                    if (fld.name == curName) {
+                        levelField = fld;
+                        continue;
+                    }
+                }
+                if (levelField == null) {
+                    return null;
+                }
+                currLevelFieldsList = levelField.children;
+            }
+            return levelField;
         }
 
         ddl.LoadTablesList();
