@@ -3,8 +3,9 @@
         @for (int level = 0; level < Model.columns.Count; level++)
         {
             <tr>
-                if (level==0) {
-                <th rowpan="5">&nbsp</th>
+                @if (level == 0)
+                {
+                    <th rowspan="100">&nbsp</th>
                 }
 
                 @foreach (var clmn in Model.columns[level])
