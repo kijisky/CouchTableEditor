@@ -1,0 +1,23 @@
+﻿@model app.Controllers.mdField
+
+@{
+    var angularVisible = "dml.show['" + @Model.Path + "']";
+    var angularColspan = "" + @Model.spanWidth;
+
+    if (Model.HasChildren())
+    {
+        var dependentChilds = Model.GetChildLeafPaths();
+        angularVisible = String.Join(" || ", dependentChilds.Select(stringPath => "dml.show['" + @stringPath + "']"));
+        angularColspan = String.Join(" + ", dependentChilds.Select(stringPath => "(dml.show['" + @stringPath + "'] ? 1 : 0) "));
+    }
+}
+
+<th rowspan="@Model.spanDepth" colspan="{{@angularColspan}}" ng-if="@angularVisible">
+
+    <span title="{{@angularColspan}} ">@(Model.alias ?? Model.name) </span>
+
+    @if (Model.descr != null && Model.descr != "")
+    {
+        <a href="#" title="@Model.descr">[?]</a>
+    }
+</th>

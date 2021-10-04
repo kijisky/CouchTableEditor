@@ -2,12 +2,9 @@
 
 
 <li>
-    <input type="checkbox" ng-model="dml.show['@Model.Path']" ng-change="dml.LoadRows()">
-    @(Model.alias ?? Model.name) 
-    @* <span> @Model.spanDepth / @Model.spanWidth </span> *@
-
     @if (Model.HasChildren())
     {
+        @(Model.alias ?? Model.name)
         <ul>
             @foreach (var fld in Model.children)
             {
@@ -15,5 +12,10 @@
             }
 
         </ul>
+    }
+    else
+    {
+        <input type="checkbox" ng-model="dml.show['@Model.Path']" ng-change="dml.LoadRows()">
+        @(Model.alias ?? Model.name)
     }
 </li>

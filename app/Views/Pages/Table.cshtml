@@ -17,10 +17,6 @@
             <tr>
                 <td class="mainTbl">
                     <ul>
-                        <li>
-                            <input type="checkbox" ng-model="dml.show['_id']">ID
-                        </li>
-
                         @foreach (var fld in Model.table.fields)
                         {
                             <partial name="FieldSelector.cshtml" model="fld" />

@@ -1,13 +1,18 @@
 ﻿<table border="1">
     <thead>
-        <tr>
-            <th></th>
-            <td ng-if="dml.show['_id']">ID</td>
-            @foreach (var fld in Model.table.fields)
-            {
-                <partial name="dataTableHead.cshtml" model="fld" />
-            }
-        </tr>
+        @for (int level = 0; level < Model.columns.Count; level++)
+        {
+            <tr>
+                if (level==0) {
+                <th rowpan="5">&nbsp</th>
+                }
+
+                @foreach (var clmn in Model.columns[level])
+                {
+                    <partial name="dataTableHeadComplex.cshtml" model="clmn" />
+                }
+            </tr>
+        }
     </thead>
     <tbody>
         <tr>
@@ -16,7 +21,7 @@
             </td>
         </tr>
 
-        <tr ng-repeat="row in dml.rowsList | filter:dml.searchString" 
+        <tr ng-repeat="row in dml.rowsList | filter:dml.searchString"
             ng-class="{'selected' : row.data==dml.selectedRow.data }">
             <td>
                 <button ng-click="dml.SaveRow(row)" ng-show="row.IsDirty||row.IsNew">Save</button>

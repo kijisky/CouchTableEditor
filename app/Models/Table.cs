@@ -45,6 +45,27 @@ namespace app.Controllers
             return ans;
         }
 
+        internal IEnumerable<IEnumerable<mdField>> GetColumnsBreadthsFirst()
+        {
+            var ans = new List<List<mdField>>();
+
+            ans.Add(this.fields);
+
+            for (var level = 0; true; level++)
+            {
+                var levelFields = new List<mdField>();
+
+                foreach (var fld in this.fields)
+                {
+                    var subfields = fld.GetSubFieldsOfLevel(level);
+                    levelFields.AddRange(subfields);
+                }
+
+                if (levelFields.Count() == 0) { return ans; }
+                ans.Add(levelFields);
+            }
+        }
+
         internal IEnumerable<TableRow> ReadAllRows(IEnumerable<string> fieldsList, object filter = null)
         {
             var rowsDB = this.GetTableDB(this.id);
@@ -179,6 +200,10 @@ namespace app.Controllers
             for (int i = 0; i < pDepth; i++)
             {
                 var curName = pathParts[i];
+                if (currLevelFieldsList == null)
+                {
+                    return null;
+                }
                 levelField = currLevelFieldsList.Where(f => f.name == curName).FirstOrDefault();
                 if (levelField == null)
                 {
@@ -213,7 +238,7 @@ namespace app.Controllers
             if (fieldsList == null || fieldsList.Count() == 0) return;
             foreach (var fld in fieldsList)
             {
-                fld.spanDepth = maxDepth - vCurDepth;
+                fld.spanDepth = fld.HasChildren() ? 1 : maxDepth - vCurDepth;
                 fld.spanDepthDiff = vCurDepth;
                 fld.spanWidth = this.CalcFieldsWidth(fld);
                 this.CalculateSpans(fld.children, vCurDepth + 1, maxDepth);

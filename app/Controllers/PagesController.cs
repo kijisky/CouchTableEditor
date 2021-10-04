@@ -40,6 +40,7 @@ namespace app.Controllers
             var model = new TableViewModel();
             model.tableCode = tableCode;
             model.table = this.db.GetTable(tableCode);
+            model.columns = model.table.GetColumnsBreadthsFirst();
 
             return View("Table", model);
         }

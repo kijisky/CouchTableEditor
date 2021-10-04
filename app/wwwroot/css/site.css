@@ -110,7 +110,7 @@ div.popupWin {
   bottom: 10%;
 }
 
-th {
+thead {
   position: sticky;
   top: 0;
   background: lightgray;

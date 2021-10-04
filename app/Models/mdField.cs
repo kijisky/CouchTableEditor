@@ -32,6 +32,16 @@ namespace app.Controllers
         public List<mdField> children { get; set; }
         public string Path { get; internal set; }
 
+
+        public mdField()
+        {
+            if (this.children == null)
+            {
+                this.children = new List<mdField>();
+            }
+        }
+
+
         internal void SetFrom(mdField field)
         {
             //this.name = field.name;
@@ -53,11 +63,35 @@ namespace app.Controllers
             this.extJsonPath = field.extJsonPath;
             this.extFieldID = field.extFieldID;
             this.extFieldName = field.extFieldName;
+
+            if (this.children == null)
+            {
+                this.children = new List<mdField>();
+            }
         }
 
         internal void SetValue(TableRow newRow, string val)
         {
             newRow.data[this.name] = val;
+        }
+
+        internal IEnumerable<mdField> GetSubFieldsOfLevel(int level)
+        {
+            if (!this.HasChildren())
+            {
+                return new mdField[] { };
+            }
+            if (level == 0)
+            {
+                return this.children;
+            }
+            var ans = new List<mdField>();
+            foreach (var fld in this.children)
+            {
+                var subfields = fld.GetSubFieldsOfLevel(level - 1);
+                ans.AddRange(subfields);
+            }
+            return ans;
         }
 
         /// Получить имена родительских "путей" (если мы "a.b.f.t", то  ["a", "a.b", "a.b.f"] )
@@ -77,6 +111,24 @@ namespace app.Controllers
                 dependPaths.Add(currentPath);
             }
             return dependPaths;
+        }
+
+        public IEnumerable<string> GetChildLeafPaths()
+        {
+            if (this.HasChildren())
+            {
+                var ans = new List<string>();
+                foreach (var fld in this.children)
+                {
+                    var pathsList = fld.GetChildLeafPaths();
+                    ans.AddRange(pathsList);
+                }
+                return ans;
+            }
+            else
+            {
+                return new string[] { this.Path };
+            }
         }
 
         public bool HasChildren()
