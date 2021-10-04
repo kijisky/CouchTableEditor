@@ -31,6 +31,7 @@ namespace app.Controllers
 
         public List<mdField> children { get; set; }
         public string Path { get; internal set; }
+        public string PathToLoad { get; internal set; }
 
 
         public mdField()
@@ -134,6 +135,23 @@ namespace app.Controllers
         public bool HasChildren()
         {
             return this.children != null && this.children.Count > 0;
+        }
+
+        internal void CalculatePathToLoad(string staticPath = null)
+        {
+            this.PathToLoad = staticPath ?? this.Path;
+            foreach (var subField in this.children)
+            {
+                if (this.type == "subtable")
+                {
+                    subField.CalculatePathToLoad(this.Path);
+                }
+                else
+                {
+                    subField.CalculatePathToLoad(staticPath);
+                }
+
+            }
         }
     }
 }

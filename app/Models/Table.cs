@@ -22,8 +22,8 @@ namespace app.Controllers
                 this.tableData = new mdTable();
             }
 
-            this.CalculateFeildsDepth();
             this.CalculateFeildsPaths(this.fields);
+            this.CalculateFeildsDepth();
         }
 
         internal static Table GetByCode(CouchClient client, string pId)
@@ -231,6 +231,9 @@ namespace app.Controllers
         {
             var maxDepth = this.GetMaxDepth(this.fields);
             this.CalculateSpans(this.fields, 0, maxDepth);
+            foreach(var fld in this.fields){
+                fld.CalculatePathToLoad();
+            }
         }
 
         private void CalculateSpans(IEnumerable<mdField> fieldsList, int vCurDepth, int maxDepth)

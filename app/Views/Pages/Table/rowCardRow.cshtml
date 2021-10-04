@@ -40,6 +40,10 @@
         {
             <span></span>
         }
+        else if (Model.type == "subtable")
+        {
+            <partial name="fieldSubTable.cshtml" model="Model" />
+        }
         else if (Model.type == "dict")
         {
             <partial name="fieldDict.cshtml" model="Model" />

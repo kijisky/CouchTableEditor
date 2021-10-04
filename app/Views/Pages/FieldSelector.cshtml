@@ -2,7 +2,7 @@
 
 
 <li>
-    @if (Model.HasChildren())
+    @if (Model.type=="subclass")
     {
         @(Model.alias ?? Model.name)
         <ul>
@@ -15,7 +15,7 @@
     }
     else
     {
-        <input type="checkbox" ng-model="dml.show['@Model.Path']" ng-change="dml.LoadRows()">
+        <input type="checkbox" ng-model="dml.show['@Model.Path']" ng-change="dml.onFieldsChange('@Model.PathToLoad')">
         @(Model.alias ?? Model.name)
     }
 </li>

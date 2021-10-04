@@ -1,0 +1,50 @@
+﻿@model app.Controllers.mdField
+
+
+<ul>
+    @foreach (var fld in Model.children)
+    {
+        <partial name="../FieldSelector.cshtml" model="fld" />
+    }
+
+</ul>
+
+<!-- <span ng-if="!row.IsEditing['@Model.Path']"> -->
+<i class="bi bi-pencil-square" ng-click="row.IsEditing['@Model.Path']=true"></i>
+
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <th rowspan="100">&nbsp</th>
+            @foreach (var column in Model.children)
+            {
+                <partial name="dataTableHead.cshtml" model="column" />
+            }
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                <button ng-click="row.data.@Model.Path = []">Reset</button>
+                <button ng-click="dml.AddSubTableRow(row.data, '@Model.Path')">Add row</button>
+            </td>
+        </tr>
+
+        <tr ng-repeat="row in row.data.@Model.Path"
+            ng-class="{'selected' : row.data==dml.selectedSubRow['@Model.Path'].data }">
+            <td>
+                <button ng-show="row.IsDirty||row.IsNew">Save</button>
+                <button >Open</button>
+            </td>
+
+            @foreach (var fld in Model.children)
+            {
+                <partial name="dataTableCell.cshtml" model="fld" />
+            }
+
+        </tr>
+    </tbody>
+</table>

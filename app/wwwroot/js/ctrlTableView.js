@@ -7,9 +7,10 @@ tableEditor
         dml.searchString = "";
         dml.ExtVoc = {};
         dml.selectedRow = {};
+        dml.loadedFields = {};
 
         dml.click = function () {
-            console.log(this.tablesList);
+            console.log(dml.tablesList);
         }
 
         dml.InitTableCode = function (tableCode) {
@@ -38,6 +39,15 @@ tableEditor
                 }
                 $scope.$apply();
             });
+        }
+
+        dml.onFieldsChange = function (fieldPath) {
+            if (dml.loadedFields[fieldPath] || !dml.show[fieldPath]) {
+                return;
+            } else {
+                dml.loadedFields[fieldPath] = true;
+                dml.LoadRows();
+            }
         }
 
         dml.MarkRowDirty = function (row) {
@@ -73,6 +83,11 @@ tableEditor
         dml.LoadRows = function () {
             dml.SelectRowReset();
             var fieldsList = dml.GetVisibleFields();
+            for (var flds in fieldsList) {
+                this.loadedFields = {};
+                this.loadedFields[flds] = true;
+            }
+
             svcDML.GetRows(dml.tableCode, fieldsList).then(function (data) {
                 dml.rowsList = data;
                 logger.log("tables loaded");
@@ -117,6 +132,22 @@ tableEditor
                 row.IsNew = false;
                 $scope.$apply();
             })
+        }
+
+
+
+        ////. SubTables
+
+        dml.AddSubTableRow = function (rowData, subTablePath) {
+            var subTable = eval("rowData." + subTablePath);
+            var isFieldArray = subTable && Array.isArray(subTable);
+            if (!isFieldArray) {
+                eval("rowData." + subTablePath + " = [];");
+            }
+            var subTable = eval("rowData." + subTablePath);
+
+            var newRow = { IsNew: true, IsEdititnd: true }
+            subTable.push(newRow);
         }
 
         dml.LoadRows();
