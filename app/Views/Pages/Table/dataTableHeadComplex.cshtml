@@ -1,18 +1,20 @@
 ﻿@model app.Controllers.mdField
 
 @{
-    var angularVisible = "dml.show['" + @Model.Path + "']";
-    var angularColspan = "" + @Model.spanWidth;
+    var angularVisible = "dml.show['" + Model.Path + "']";
+    var angularColspan = "" + Model.spanWidth;
+    var angularRowSpan = "" + Model.spanDepth;
 
     if (Model.HasChildren())
     {
         var dependentChilds = Model.GetChildLeafPaths();
-        angularVisible = String.Join(" || ", dependentChilds.Select(stringPath => "dml.show['" + @stringPath + "']"));
-        angularColspan = String.Join(" + ", dependentChilds.Select(stringPath => "(dml.show['" + @stringPath + "'] ? 1 : 0) "));
+        angularVisible = String.Join(" || ", dependentChilds.Select(stringPath => "dml.show['" + stringPath + "']"));
+        angularColspan = String.Join(" + ", dependentChilds.Select(stringPath => "(dml.show['" + stringPath + "'] ? 1 : 0) "));
+        angularRowSpan = "1";
     }
 }
 
-<th rowspan="@Model.spanDepth" colspan="{{@angularColspan}}" ng-if="@angularVisible">
+<th rowspan="@angularRowSpan" colspan="{{@angularColspan}}" ng-if="@angularVisible">
 
     <span title="{{@angularColspan}} ">@(Model.alias ?? Model.name) </span>
 

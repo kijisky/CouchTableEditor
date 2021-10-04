@@ -238,7 +238,7 @@ namespace app.Controllers
             if (fieldsList == null || fieldsList.Count() == 0) return;
             foreach (var fld in fieldsList)
             {
-                fld.spanDepth = fld.HasChildren() ? 1 : maxDepth - vCurDepth;
+                fld.spanDepth = maxDepth - vCurDepth;
                 fld.spanDepthDiff = vCurDepth;
                 fld.spanWidth = this.CalcFieldsWidth(fld);
                 this.CalculateSpans(fld.children, vCurDepth + 1, maxDepth);
